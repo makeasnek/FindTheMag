@@ -156,7 +156,8 @@ def projecturlfromstatsfile(statsfilename: str,all_project_urls:List[str],approv
     for knownurl in all_project_urls:
         if statsfilename.upper() in knownurl:
             return knownurl
-    print('ERRROR COULDN\'T FIND URL FOR ' + statsfilename)
+    print('WARNING: Found stats file ' + statsfilename+' but unable to find URL for it, perhaps it is not the BOINC client\'s list of projects?')
+    return statsfilename
 def project_url_from_credit_history_file(filename: str, approved_project_urls: List[str],
                                          all_project_urls: List[str]) -> str:
     filename = filename.replace('statistics_', '')
@@ -169,8 +170,8 @@ def project_url_from_credit_history_file(filename: str, approved_project_urls: L
     for knownurl in all_project_urls:
         if filename.upper() in knownurl:
             return knownurl
-    print('ERRROR COULDN\'T FIND URL FOR ' + filename)
-
+    print('WARNING: Found credit history file ' + filename+' but unable to find URL for it, perhaps it is not the BOINC client\'s list of projects?')
+    return filename
 
 
 def stat_file_to_list(stat_file_abs_path: str) -> List[Dict[str, str]]:
@@ -560,7 +561,7 @@ if __name__ == '__main__':
             else:
                 os.path.join(Path.home(), 'BOINC/')
         elif found_platform=='Darwin':
-            boinc_data_dir=os.path.join(Path.home(),'Library/Application Support/BOINC Data/')
+            boinc_data_dir=os.path.join('/Library/Application Support/BOINC Data/')
         else:
             boinc_data_dir = 'C:\ProgramData\BOINC\\'
     if not gridcoin_data_dir:
@@ -575,9 +576,11 @@ if __name__ == '__main__':
     print('Guessing BOINC data dir is ' + str(boinc_data_dir))
     if not os.path.isdir(boinc_data_dir):
         print('BOINC data dir does not appear to exist. If you have it in a non-standard location, please edit the first few lines of this script so we know where to look')
+        quit()
     print('Guessing Gridcoin data dir is ' + str(gridcoin_data_dir))
     if not os.path.isdir(gridcoin_data_dir):
         print('Gridcoin data dir does not appear to exist. If you have it in a non-standard location, please edit the first few lines of this script so we know where to look')
+        quit()
 
     # Establish connections to BOINC and Gridcoin clients, get basic info
     boinc_client = None
@@ -746,5 +749,5 @@ if __name__ == '__main__':
     else:
         print('If you\'d like to say thank you to the developers of this tool, please help us buy our next round of energy drinks by sending GRC to:')
         print(developer_address)
-    print('Press any key to exit')
+    print('Press enter key to exit')
     answer = input("")
