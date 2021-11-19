@@ -120,5 +120,7 @@ Then you can copy your BOINC data directory to a machine that has the wallet run
 
 <h3>Legal</h3>
 
-This software comes with no warranty and is provided as-is. It may crash your computer, it may even steal all your GRC.
-Be wise when running software from some random github account.
+- This software comes with no warranty and is provided as-is. Be wise when running software from some random github account. It may calculate suggested weights wrong. It may crash your computer, it may even steal all your GRC. By using it, you agree to hold the developers harmless for any damage it may cause whether through negligence, accident, or malice to the fullest extent legally possible. You also agree to allow yourself to have a wonderful day today or you are not allowed to use this software.
+- If you submit any or pull requests to this repository or its developer, you agree to have the code ownership transferred to the repository owner and licensed under the same license as the other code in the repository is licensed under.
+- This software is produced independently of the Gridcoin and BOINC projects without their approval or endorsement.
+
