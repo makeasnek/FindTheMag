@@ -82,7 +82,7 @@ profitability = (total credits earned / time those credits took) * mag ratio
 <b>Why is it setting all these projects weights to 1?</b>
 
 So that it can gradually accumulate enough stats to determine the profitability of these projects, and so those stats
-continue to update as projects change how their applications and credit assignment work.
+continue to update as projects change how their applications and credit assignment work. Note that 1 = .1% of your machine's processing time since the total weight is 1000 not 100.
 
 <b>What if there's a project I <i>never</i> want to crunch?</b>
 
