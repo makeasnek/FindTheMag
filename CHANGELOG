@@ -1,0 +1,2 @@
+Version .1 Release Date: Nov 2021
+- Added basic functionality to read BOINC and Gridcoin data to compute optimal projects and print out weights
