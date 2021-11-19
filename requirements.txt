@@ -1,11 +1,6 @@
-json
-pprint
-re
-platform
 pathlib
 datetime
 xmltodict
 requests
-os
 requests
 typing
