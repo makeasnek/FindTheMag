@@ -388,7 +388,11 @@ def get_most_mag_efficient_projects(combinedstats: dict, ignored_projects: List[
         return False
 
     return_list = []
-    highest_project = next(iter(combinedstats))  # first project is the "highest project" until we test others against it
+    try:
+        highest_project = next(iter(combinedstats))  # first project is the "highest project" until we test others against it
+    except Exception as e:
+        print('No projects found? Are you sure this computer has been crunching BOINC for more than a day? Quitting. '+str(e))
+        quit()
     # find the highest project
     for project_url, project_stats in combinedstats.items():
         current_mag_per_hour=project_stats['COMPILED_STATS']['AVGMAGPERHOUR']
@@ -416,7 +420,7 @@ def get_most_mag_efficient_projects(combinedstats: dict, ignored_projects: List[
 
 def sidestake_check(check_sidestake_results:bool,check_type:str,address:str)->None:
     if check_type=='FOUNDATION':
-        message1='It appears that you have not enabled sidestaking to the Gridcoin foundation in your wallet. We believe it is only fair that people benefiting from the Gridcoin network contribute back to it\nSidestaking enables you to contribute a small % of your staking profits\nThis tool will not run unless you are donating at least 1% of your staking earnings to the Gridcoin foundation.\nWould you like to enable sidestaking? Please answer "Y" or "N" (without quotes)'
+        message1='It appears that you have not enabled sidestaking to the Gridcoin foundation in your wallet. We believe it is only fair that people benefiting from the Gridcoin network contribute back to it\nSidestaking enables you to contribute a small % of your staking profits\nThis tool will not run unless you are donating at least 1% of your staking earnings to the Gridcoin foundation.\nWould you like to enable sidestaking?. \nPlease answer "Y" or "N" (without quotes)'
         message2='What percent would you like to donate to the foundation? Donations go towards software development, promotion, and growth of the coin. Enter a number like 5 for 5%. Please enter whole numbers only'
     elif check_type=='DEVELOPER':
         message1='Are you interested in sidestaking to the developers of this tool? This is optional. We ask you to consider what gain in efficiency this tool can bring you and to donate a small portion of that gain.\nPlease. I am trying to buy a pony.\nPlease answer "Y" or "N" (without quotes)'
@@ -568,12 +572,12 @@ if __name__ == '__main__':
             gridcoin_data_dir=os.path.join(Path.home(),'AppData\Roaming\GridcoinResearch\\')
 
     # check that directories exist
+    print('Guessing BOINC data dir is ' + str(boinc_data_dir))
     if not os.path.isdir(boinc_data_dir):
-        print('Guessing BOINC data dir is '+str(boinc_data_dir))
-        print('BOINC data dir does not appear to exist. If you have it in a non-standard location, please add it to config.py')
+        print('BOINC data dir does not appear to exist. If you have it in a non-standard location, please edit the first few lines of this script so we know where to look')
+    print('Guessing Gridcoin data dir is ' + str(gridcoin_data_dir))
     if not os.path.isdir(gridcoin_data_dir):
-        print('Guessing Gridcoin data dir is '+str(gridcoin_data_dir))
-        print('Gridcoin data dir does not appear to exist. If you have it in a non-standard location, please add it to config.py')
+        print('Gridcoin data dir does not appear to exist. If you have it in a non-standard location, please edit the first few lines of this script so we know where to look')
 
     # Establish connections to BOINC and Gridcoin clients, get basic info
     boinc_client = None
