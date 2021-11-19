@@ -37,10 +37,13 @@ some GRC to me at RzUgcntbFm8PeSJpauk6a44qbtu92dpw3K
 <h3>Quickstart instructions</h3>
 For all platforms: Open the first few lines of the file in a text editor and change the settings you want.
 <h4>Windows</h4>
+ - No step by step available yet
 <h4>Linux</h4>
  - Open a terminal and go to the folder you downloaded this tool info
- - Run pip -r requirements.txt <- Note that you need pip installed, if you don't have it, you might need to run a sudo apt install python3-pip
+ - Run pip3 install -r requirements.txt <- Note that you need pip installed, if you don't have it, you might need to run a sudo apt install python3-pip
+ - Run python3 main.py
 <h4>OS X</h4>
+ - No step by step available yet
 
 <h3>FAQ:</h3>
 <b>I'm not getting as many coins as I expect or I haven't received my rewards?</b>

@@ -7,7 +7,7 @@ preferred_projects_percent=80 # example: 80
 # projects on the ignored_projects list will always have their weight set to zero.
 ignored_projects=['https://example.com/project1','http://exampleproject.com/project2']
 boinc_data_dir=None #Example: '/var/lib/boinc-client' or 'C:\\ProgramData\\BOINC\\'. Only needed if in a non-standard location, otherwise None
-gridcoin_data_dir='/home/user/sharedfolder/gridcoin-client/' #Example: '/home/user/.GridcoinResearch' or 'C:\\Users\\username\\AppData\Roaming\GridcoinResearch\\'. Only needed if in a non-standard location, otherwise None
+gridcoin_data_dir=None #Example: '/home/user/.GridcoinResearch' or 'C:\\Users\\username\\AppData\Roaming\GridcoinResearch\\'. Only needed if in a non-standard location, otherwise None
 ##### DON'T EDIT THINGS BELOW THIS LINE
 
 import json
