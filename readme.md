@@ -42,7 +42,7 @@ For all platforms: Open the first few lines of the main.py file in a text editor
 
  - Open a terminal and go to the folder you downloaded this tool into using `cd /home/user/Downloads/FindTheMag` or wherever you put it
  - Run `pip3 install -r requirements.txt` (Note that you need pip installed, if you don't have it, you might need to run a `sudo apt install python3-pip`)
- - Run python3 main.py
+ - Run `python3 main.py`
 
 <h4>OS X</h4>
  - Open a terminal and go to the folder you downloaded this tool into using `cd /home/user/Downloads/FindTheMag` or wherever you put it
