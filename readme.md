@@ -2,16 +2,16 @@
 FindTheMag helps optimize your BOINC client for gridcoin mining. You can group BOINC projects into two groups: 
 "preferred" projects and "mining" projects. Preferred projects are ones which you want to crunch regardless of how much 
 GRC they get you. Mining projects are projects which you are willing to crunch, but only if they get you the maximum 
-amount of GRC possible. In the event that your preferred project(s) happen to be the most efficient to mine, it will 
+amount of GRC possible. In the event that your preferred project(s) happen to be the most efficient to mine, FindTheMag will 
 assign all project weight to them.
 
-FindTheMag uses your own BOINC client's stats to determine which projects get the most credit per hour on your machine. It then figures out (using your Gridcoin wallet) which project gets you the most magnitude per hour. [Quickmag](http://quickmag.ml/cgi-bin/script.cgi) is a similar tool which will estimate the most profitable projects for your hardware based on the performance of other crunchers with similar hardware.
+FindTheMag uses your own BOINC client's stats to determine which projects get the most credit per hour on your machine. It then figures out (using your Gridcoin wallet) which project gets you the most magnitude per hour. [Quickmag](http://quickmag.ml/cgi-bin/script.cgi) is a similar tool which will estimate the most profitable projects for your hardware based on the performance of other crunchers with similar hardware. It's cool and elegant. You should check it out.
 
 This tool's accuracy improves the longer you have been running BOINC. It will automatically set all Gridcoin-approved 
 projects to a weight of one so they will continue to use .1% of your processing power, each time increasing the accuracy of the tool.
 
 <b>This tool requires that you have the Gridcoin wallet running on your machine</b> and that it is fully synced. See FAQ for ways around this. The
-wallet doesn't need any coins in it, just an up-to-date copy of the blockchain. It also requires python 3.8 or higher,
+wallet doesn't need any coins in it, just an up-to-date copy of the blockchain. It also requires **python 3.8 or higher**,
 though earlier versions may work they are unsupported. If you just installed BOINC, this tool takes about 48 hours to start working as we have to wait for projects to grant you credit for your work.
 
 <b>If you use an account manager like BAM:</b>
