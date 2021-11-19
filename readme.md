@@ -71,8 +71,13 @@ it needs to catch up.
 Each project assigns credit for your work, and BOINC keeps track of how long that work took. The formula to figure out
 the profitability of a project is below:
 
-profitability (mag per hour) = (total credits assigned / time those credits took) * mag ratio ( project total magnitude / average project RAC from
-last 30 days )
+First it calculates the mag ratio: 
+
+mag ratio =  project total magnitude / average total project RAC from last 30 days
+
+Then you can get profitability (mag/hr): 
+
+profitability = (total credits earned / time those credits took) * mag ratio 
 
 <b>Why is it setting all these projects weights to 1?</b>
 
