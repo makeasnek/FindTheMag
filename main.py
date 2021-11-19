@@ -361,13 +361,13 @@ def add_mag_to_combined_stats(combined_stats: dict, mag_ratios: Dict[str, float]
                 if project_url not in preferred_projects:
                     unapproved_list.append(project_url.lower())
             project_stats['COMPILED_STATS']['AVGMAGPERHOUR'] = 0
-            project_stats['COMPILED_STATS']['CREDITPERMAG'] = 0
+            project_stats['COMPILED_STATS']['MAGPERCREDIT'] = 0
             continue
         avg_credit_per_hour = 0
         if 'AVGCREDITPERHOUR' in project_stats['COMPILED_STATS']:
             avg_credit_per_hour = project_stats['COMPILED_STATS']['AVGCREDITPERHOUR']
         project_stats['COMPILED_STATS']['AVGMAGPERHOUR'] = avg_credit_per_hour * mag_ratios[project_url]
-        project_stats['COMPILED_STATS']['CREDITPERMAG']=mag_ratios[project_url]
+        project_stats['COMPILED_STATS']['MAGPERCREDIT']=mag_ratios[project_url]
     return combined_stats,unapproved_list
 
 
@@ -525,7 +525,7 @@ def print_table(table_dict:Dict[str,Dict[str,str]],sortby:str):
 if __name__ == '__main__':
     combined_stats = {}
     APPROVED_PROJECT_URLS = []
-    weak_stats = [] # projects which we don't have enough stats from to make accurate averaged
+    weak_stats = [] # projects which we don't have enough stats from to make accurate averages
     # COMBINEDSTATS has format:
 #    COMBINED_STATS_EXAMPLE = {
 #        'HTTP://PROJECT.COM/PROJECT': {
@@ -611,7 +611,6 @@ if __name__ == '__main__':
             with open(os.path.join(gridcoin_data_dir, 'gridcoinresearch.conf'), "a") as myfile:
                 from random import choice
                 from string import ascii_uppercase
-
                 rpc_user = ''.join(choice(ascii_uppercase) for i in range(8))
                 rpc_password = ''.join(choice(ascii_uppercase) for i in range(12))
                 rpc_port = 9876
@@ -625,7 +624,7 @@ if __name__ == '__main__':
                 myfile.write("rpcuser=" + rpc_user + '\n')
                 myfile.write("rpcpassword=" + rpc_password + '\n')
             print('Alright, we\'ve modified the config file. Please restart the gridcoin wallet.')
-            print('Once it\'s loaded and fully synced, press any key to continue')
+            print('Once it\'s loaded and fully synced, press enter to continue')
             discard_me = input('')
 
     #check sidestakes
@@ -720,7 +719,7 @@ if __name__ == '__main__':
         table_dict[project_url]={}
         for stat_name,stat_value in stats_dict['COMPILED_STATS'].items():
             rounding=2
-            if stat_name=='CREDITPERMAG':
+            if stat_name=='MAGPERCREDIT':
                 rounding=5
             table_dict[project_url][stat_name]=str(round(float(stat_value),rounding))
     print_table(table_dict,sortby='AVGMAGPERHOUR')
