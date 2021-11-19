@@ -1,12 +1,17 @@
-##### EDIT THINGS BELOW THIS LINE TO SUIT YOUR USE CASE
-#Your "preferred projects list". Work will be split evenly among these projects. If you just want to crunch the most profitable projects all the time, uncomment the next line:
-#preferred_projects=[]
-preferred_projects=['https://www.worldcommunitygrid.org/boinc/','https://www.sidock.si/sidock/']
+##### EDIT THINGS BELOW THIS LINE TO YOUR CONTENT
 # percent of resources to dedicate to preferred projects
-preferred_projects_percent=80 # example: 80
+preferred_projects_percent=80  # example: 80
+# Your "preferred projects list". Work will be split among these projects according to given percent (10, 20, 80).
+# For example, if you want 80% of your "preferred project crunching time" to go to a particular project, put in 80. These values must add up to 100.
+# If you just want to crunch the most profitable projects all the time, uncomment the next line (and comment out the subsequent one) to have no preferred projects:
+# preferred_projects={}
+preferred_projects={
+    'https://www.sidock.si/sidock/':80,
+    'https://www.worldcommunitygrid.org/boinc/':20
+}
 # projects on the ignored_projects list will always have their weight set to zero.
 ignored_projects=['https://example.com/project1','http://exampleproject.com/project2']
-boinc_data_dir=None #Example: '/var/lib/boinc-client' or 'C:\\ProgramData\\BOINC\\'. Only needed if in a non-standard location, otherwise None
+boinc_data_dir=None #Example: '/var/lib/boinc-client' or 'C:\\ProgramData\\BOINC\\'. Only needed if in a non-standard location, otherwise None.
 gridcoin_data_dir=None #Example: '/home/user/.GridcoinResearch' or 'C:\\Users\\username\\AppData\Roaming\GridcoinResearch\\'. Only needed if in a non-standard location, otherwise None
 ##### DON'T EDIT THINGS BELOW THIS LINE
 
@@ -389,6 +394,7 @@ def get_most_mag_efficient_projects(combinedstats: dict, ignored_projects: List[
         return False
 
     return_list = []
+    highest_project=None
     try:
         highest_project = next(iter(combinedstats))  # first project is the "highest project" until we test others against it
     except Exception as e:
@@ -412,7 +418,7 @@ def get_most_mag_efficient_projects(combinedstats: dict, ignored_projects: List[
         if project_url == highest_project:
             continue
         if minimum_for_inclusion <= current_avg_mag and is_eligible(project_url, project_stats):
-            print('Also including project because within 10% variance of highest project: {}, mag/hr {}'.format(project_url.lower(), current_avg_mag))
+            print('Also including this project because it\'s within 10% variance of highest mag/hr project: {}, mag/hr {}'.format(project_url.lower(), current_avg_mag))
             return_list.append(project_url)
         else:
             pass
@@ -581,6 +587,12 @@ if __name__ == '__main__':
     if not os.path.isdir(gridcoin_data_dir):
         print('Gridcoin data dir does not appear to exist. If you have it in a non-standard location, please edit the first few lines of this script so we know where to look')
         quit()
+    total_found_values = 0
+    for url, found_value in preferred_projects.items():
+        total_found_values+=found_value
+    if total_found_values!=100 and len(preferred_projects)>0:
+        print('Warning: The weights of your preferred projects do not add up to 100! Quitting.')
+        quit()
 
     # Establish connections to BOINC and Gridcoin clients, get basic info
     boinc_client = None
@@ -641,7 +653,7 @@ if __name__ == '__main__':
     sidestake_check(check_sidestake_results,'FOUNDATION',foundation_address)
     check_sidestake_results = check_sidestake(gridcoin_conf, developer_address, 1)
     sidestake_check(check_sidestake_results, 'DEVELOPER', developer_address)
-    print('Welcome to FindTheMag and thank you for trying out our tool. Your feedback and suggestions are welcome on our github page : )')
+    print('Welcome to FindTheMag and thank you for trying out this tool. Your feedback and suggestions are welcome on the github page : )')
     print('Looks like you are sidestaking to the foundation, thank you for giving back!')
     check_sidestake_results = check_sidestake(gridcoin_conf, developer_address, 1)
     try:
@@ -668,14 +680,17 @@ if __name__ == '__main__':
     print('Curing some cancer along the way...')
     # Calculate project weights w/ credit/hr
     final_project_weights = {}
-    preferred_projects = preferred_projects
-    preferred_projects = [x.upper() for x in preferred_projects]  # uppercase project url list
+    # Uppercase preferred_projects list
+    for url in list(preferred_projects.keys()):
+        weight=preferred_projects[url]
+        del preferred_projects[url]
+        preferred_projects[url.upper()] = weight
     ignored_projects = [x.upper() for x in ignored_projects]  # uppercase ignored project url list
     total_preferred_weight = (preferred_projects_percent / 100) * 1000
     total_mining_weight = 1000 - total_preferred_weight
     total_mining_weight_remaining = total_mining_weight
     mag_ratios = get_project_mag_ratios(grc_client)
-    combined_stats,unapproved_projects = add_mag_to_combined_stats(combined_stats, mag_ratios, APPROVED_PROJECT_URLS,preferred_projects)
+    combined_stats,unapproved_projects = add_mag_to_combined_stats(combined_stats, mag_ratios, APPROVED_PROJECT_URLS,preferred_projects.keys())
     if len(unapproved_projects)>0:
         print('Warning: Projects below were found in your BOINC config but are not on the gridcoin approval list or your preferred projects list. If you want them to be given weight, be sure to add them to your preferred projects')
         pprint.pprint(unapproved_projects)
@@ -714,10 +729,11 @@ if __name__ == '__main__':
         final_project_weights[project_url] += per_efficient_project
     # Assign weight to preferred projects
     per_preferred_project = total_preferred_weight / len(preferred_projects)
-    for project_url in preferred_projects:
+    for project_url,weight in preferred_projects.items():
         if project_url not in final_project_weights:
             final_project_weights[project_url]=0
-        final_project_weights[project_url] += per_preferred_project
+        intended_weight=(preferred_projects[project_url] / 100) * total_preferred_weight
+        final_project_weights[project_url] += intended_weight
     print('')
     print('SOME PRETTY STATS JUST FOR YOU, SORTED BY AVGMAGPERHOUR')
     #generate table to print pretty
