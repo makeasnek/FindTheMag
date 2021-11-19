@@ -30,7 +30,7 @@ though earlier versions may work they are unsupported. If you just installed BOI
 If you do not have a minimum 1% sidestake setup to the Gridcoin foundation, this program will prompt you to set one up
 and refuse to run if you don't. We should all be pitching in to help promote and improve a coin we all benefit from.
 
-If you find this tool useful, consider sidestaking or donating
+<b>If you find this tool useful</b>, consider sidestaking or donating
 some GRC to me at RzUgcntbFm8PeSJpauk6a44qbtu92dpw3K
 
 ## Quickstart instructions
