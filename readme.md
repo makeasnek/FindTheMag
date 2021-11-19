@@ -5,8 +5,7 @@ GRC they get you. Mining projects are projects which you are willing to crunch, 
 amount of GRC possible. In the event that your preferred project(s) happen to be the most efficient to mine, it will 
 assign all project weight to them.
 
-FindTheMag uses your own BOINC client's stats to determine which projects get the most credit per hour on your machine.
-It then figures out (using your Gridcoin wallet) which project gets you the most magnitude per hour. 
+FindTheMag uses your own BOINC client's stats to determine which projects get the most credit per hour on your machine. It then figures out (using your Gridcoin wallet) which project gets you the most magnitude per hour. 
 
 This tool is not perfectly accurate, but accuracy improves the longer you have been running BOINC. It will automatically
 set all Gridcoin-approved projects to a weight of one so they will continue to use 1% of your processing power, each
