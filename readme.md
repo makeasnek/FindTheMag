@@ -36,6 +36,7 @@ some GRC to me at RzUgcntbFm8PeSJpauk6a44qbtu92dpw3K
 ## Quickstart instructions
 For all platforms: Open the first few lines of the main.py file in a text editor and change the settings you want.
 <h4>Windows</h4>
+
  - Download the latest version of python from python.org. Enable the "install to system path" option while installing.
  - In command prompt, run the command `python -m pip install --upgrade pip`
  - In command prompt, run the command `python install -r C:\Users\user\Downloads\FindTheMag-master\requirements.txt` (or wherever you saved this tool)
