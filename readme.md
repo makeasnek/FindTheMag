@@ -5,7 +5,7 @@ GRC they get you. Mining projects are projects which you are willing to crunch, 
 amount of GRC possible. In the event that your preferred project(s) happen to be the most efficient to mine, FindTheMag will 
 assign all project weight to them.
 
-FindTheMag uses your own BOINC client's stats to determine which projects get the most credit per hour on your machine. It then figures out (using your Gridcoin wallet) which project gets you the most magnitude per hour. [Quickmag](http://quickmag.ml/cgi-bin/script.cgi) is a similar tool which will estimate the most profitable projects for your hardware based on the performance of other crunchers with similar hardware. It's cool and elegant. You should check it out.
+FindTheMag uses your own BOINC client's stats to determine which projects get the most credit per hour on your machine. It then figures out (using your Gridcoin wallet) which project gets you the most magnitude per hour. [Quickmag](http://quickmag.ml/cgi-bin/script.cgi) is a similar tool which will estimate the most profitable projects for your hardware based on the performance of other crunchers with similar hardware. It's useful and elegant. You should check it out.
 
 This tool's accuracy improves the longer you have been running BOINC. It will automatically set all Gridcoin-approved 
 projects to a weight of one so they will continue to use .1% of your processing power, each time increasing the accuracy of the tool.
@@ -36,7 +36,10 @@ some GRC to me at RzUgcntbFm8PeSJpauk6a44qbtu92dpw3K
 ## Quickstart instructions
 For all platforms: Open the first few lines of the main.py file in a text editor and change the settings you want.
 <h4>Windows</h4>
- - No step by step available yet
+ - Download the latest version of python from python.org. Enable the "install to system path" option while installing.
+ - In command prompt, run the command `python -m pip install --upgrade pip`
+ - In command prompt, run the command `python install -r C:\Users\user\Downloads\FindTheMag-master\requirements.txt` (or wherever you saved this tool)
+ - Double-click on main.py or run `python C:\path\to\main.py` from command prompt. We suggest the second method as it will display errors if the program exists unexpectedly
 
 <h4>Linux</h4>
 
@@ -55,6 +58,10 @@ For all platforms: Open the first few lines of the main.py file in a text editor
 
 Consult the official Gridcoin help channels, this tool just suggests project weights. If you are a solo miner, be sure you
 have enabled GDPR export on projects which require it. See https://gridcoin.us/guides/whitelist.htm
+
+<b>I'm getting some error while running the tool or need to contact you</b>
+
+Open an issue here on github or email makeasnek{at}gmail.com.
 
 <b>My BOINC client doesn't seem to be crunching according to the weight I assigned?</b>
 
