@@ -570,7 +570,7 @@ if __name__ == '__main__':
             if os.path.isdir('/var/lib/boinc-client'):
                 boinc_data_dir='/var/lib/boinc-client'
             else:
-                os.path.join(Path.home(), 'BOINC/')
+                boinc_data_dir=os.path.join(Path.home(), 'BOINC/')
         elif found_platform=='Darwin':
             boinc_data_dir=os.path.join('/Library/Application Support/BOINC Data/')
         else:
