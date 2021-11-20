@@ -11,8 +11,8 @@ preferred_projects={
 }
 # projects on the ignored_projects list will always have their weight set to zero.
 ignored_projects=['https://example.com/project1','http://exampleproject.com/project2']
-boinc_data_dir=None #Example: '/var/lib/boinc-client' or 'C:\\ProgramData\\BOINC\\'. Only needed if in a non-standard location, otherwise None.
-gridcoin_data_dir=None #Example: '/home/user/.GridcoinResearch' or 'C:\\Users\\username\\AppData\Roaming\GridcoinResearch\\'. Only needed if in a non-standard location, otherwise None
+boinc_data_dir=None # Example: '/var/lib/boinc-client' or 'C:\\ProgramData\\BOINC\\'. Only needed if in a non-standard location, otherwise None.
+gridcoin_data_dir=None # Example: '/home/user/.GridcoinResearch' or 'C:\\Users\\username\\AppData\Roaming\GridcoinResearch\\'. Only needed if in a non-standard location, otherwise None
 ##### DON'T EDIT THINGS BELOW THIS LINE
 
 import json
@@ -406,7 +406,8 @@ def get_most_mag_efficient_projects(combinedstats: dict, ignored_projects: List[
         highest_mag_per_hour=combinedstats[highest_project]['COMPILED_STATS']['AVGMAGPERHOUR']
         if  current_mag_per_hour > highest_mag_per_hour and is_eligible(project_url, project_stats):
             highest_project = project_url
-    print('\n\nHighest mag/hr project is {} w/ {}/hr of credit'.format(highest_project.lower(),
+    if combinedstats[highest_project]['COMPILED_STATS']['TOTALTASKS']>=10:
+        print('\n\nHighest mag/hr project is {} w/ {}/hr of credit'.format(highest_project.lower(),
                                                                    combinedstats[highest_project]['COMPILED_STATS'][
                                                                        'AVGMAGPERHOUR']))
     return_list.append(highest_project)
@@ -423,6 +424,10 @@ def get_most_mag_efficient_projects(combinedstats: dict, ignored_projects: List[
         else:
             pass
             #print('{} + {} mag/hr'.format(project_url.lower(),project_stats['COMPILED_STATS']['AVGMAGPERHOUR']))
+    #If there is no highest project, return empty list
+    if len(return_list)==1:
+        if combinedstats[highest_project]['COMPILED_STATS']['TOTALTASKS']<10:
+            return_list.clear()
     return return_list
 
 def sidestake_check(check_sidestake_results:bool,check_type:str,address:str)->None:
@@ -686,15 +691,22 @@ if __name__ == '__main__':
         del preferred_projects[url]
         preferred_projects[url.upper()] = weight
     ignored_projects = [x.upper() for x in ignored_projects]  # uppercase ignored project url list
-    total_preferred_weight = (preferred_projects_percent / 100) * 1000
-    total_mining_weight = 1000 - total_preferred_weight
-    total_mining_weight_remaining = total_mining_weight
     mag_ratios = get_project_mag_ratios(grc_client)
     combined_stats,unapproved_projects = add_mag_to_combined_stats(combined_stats, mag_ratios, APPROVED_PROJECT_URLS,preferred_projects.keys())
     if len(unapproved_projects)>0:
         print('Warning: Projects below were found in your BOINC config but are not on the gridcoin approval list or your preferred projects list. If you want them to be given weight, be sure to add them to your preferred projects')
         pprint.pprint(unapproved_projects)
     most_efficient_projects = get_most_mag_efficient_projects(combined_stats, ignored_projects)
+    if len(most_efficient_projects)==0:
+        total_preferred_weight=1000-(len(APPROVED_PROJECT_URLS))+len(preferred_projects)
+    else:
+        total_preferred_weight = (preferred_projects_percent / 100) * 1000
+    if len(most_efficient_projects)==0:
+        print('No projects have enough completed tasks to determine which is the most efficient. Assigning all projects 1')
+        total_mining_weight=0
+    else:
+        total_mining_weight = 1000 - total_preferred_weight
+    total_mining_weight_remaining = total_mining_weight
     # assign weight of 1 to all projects which didn't make the cut
     for project_url in APPROVED_PROJECT_URLS:
         if project_url in preferred_projects:
@@ -717,11 +729,16 @@ if __name__ == '__main__':
         if project_url not in most_efficient_projects or total_tasks < 10:
             final_project_weights[project_url] = 1
             total_mining_weight_remaining -= 1
-    print('The following projects do not have enough stats to be calculated accurately, assigning them a weight of one: ')
-    pprint.pprint(weak_stats)
+    if len(most_efficient_projects)>0:
+        print('The following projects do not have enough stats to be calculated accurately, assigning them a weight of one: ')
+        pprint.pprint(weak_stats)
     # Figure out weight to assign to most efficient projects, assign it
-    per_efficient_project = total_mining_weight_remaining / len(most_efficient_projects)
-    print('Assigning ' + str(total_mining_weight_remaining) + ' weight to ' + str(
+    if len(most_efficient_projects)==0:
+        per_efficient_project=0
+    else:
+        per_efficient_project = total_mining_weight_remaining / len(most_efficient_projects)
+    if total_mining_weight_remaining>0:
+        print('Assigning ' + str(total_mining_weight_remaining) + ' weight to ' + str(
         len(most_efficient_projects)) + ' mining projects which means ' + str(per_efficient_project) + ' per project ')
     for project_url in most_efficient_projects:
         if project_url not in final_project_weights:
@@ -746,7 +763,7 @@ if __name__ == '__main__':
                 rounding=5
             table_dict[project_url][stat_name]=str(round(float(stat_value),rounding))
     print_table(table_dict,sortby='AVGMAGPERHOUR')
-    print('Total project weight will be 1000. This means .01% of processing power for monitoring each project')
+    print('Total project weight will be 1000. We will reserve a minimum .01% of processing power for monitoring each project')
     print('Total weight for preferred projects is ' + str(round(float(total_preferred_weight),2)))
     print('Total weight for mining projects is ' + str(round(float(total_mining_weight),2)))
     print('FINAL SUGGESTED PROJECT WEIGHTS')
