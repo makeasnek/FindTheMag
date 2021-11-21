@@ -12,7 +12,7 @@ preferred_projects={
 # projects on the ignored_projects list will always have their weight set to zero.
 ignored_projects=['https://example.com/project1','http://exampleproject.com/project2']
 boinc_data_dir=None # Example: '/var/lib/boinc-client' or 'C:\\ProgramData\\BOINC\\'. Only needed if in a non-standard location, otherwise None.
-gridcoin_data_dir=None # Example: '/home/user/.GridcoinResearch' or 'C:\\Users\\username\\AppData\Roaming\GridcoinResearch\\'. Only needed if in a non-standard location, otherwise None
+gridcoin_data_dir='/home/user/sharedfolder/gridcointest/' # Example: '/home/user/.GridcoinResearch' or 'C:\\Users\\username\\AppData\Roaming\GridcoinResearch\\'. Only needed if in a non-standard location, otherwise None
 ##### DON'T EDIT THINGS BELOW THIS LINE
 
 import json
@@ -114,11 +114,17 @@ def get_config_parameters(gridcoin_dir:str)->Dict[str, str]:
     if 'gridcoinresearch.conf' in os.listdir(gridcoin_dir):
         with open(os.path.join(gridcoin_dir,'gridcoinresearch.conf')) as f:
             for line in f:
+                if line.startswith('#'):
+                    continue
                 try:
                     key=line.split('=')[0]
                     value=line.split('=')[1].replace('\n','')
+                    if '#' in value:
+                        value=value.split('#')[0]
+                    value=value.strip()
                 except Exception as e:
                     print('Warning: Error parsing line from config file, ignoring: '+line)
+                    print('Pase error was: '+str(e))
                     continue
                 if key=='addnode':
                     continue
@@ -127,7 +133,7 @@ def get_config_parameters(gridcoin_dir:str)->Dict[str, str]:
                         return_dict['sidestake']=[]
                     return_dict['sidestake'].append(value)
                     continue
-                if key in config_dict:
+                if key in return_dict:
                     print('Warning: multiple values found for '+key+' in gridcoin config file at '+os.path.join(gridcoin_dir,'gridcoinresearch.conf')+' using the first one we found')
                     continue
                 return_dict[key]=value
