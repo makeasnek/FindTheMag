@@ -26,7 +26,9 @@ though earlier versions may work they are unsupported. If you just installed BOI
 
 <b>If you are a pool miner:</b>
 
-- I don't know the best way to do this, I'll gladly add step-by-step directions here if somebody can provide them. I would assume it works similarly to BAM.
+- I have confirmed that users on the [Arikado pool](https://grc.arikado.ru/) can set project weight on a per-host basis. Not sure about GRCPool.
+- I'll gladly add step-by-step directions here if somebody can provide them.
+- You can still use this tool to find out the mag/hr of various projects and "no new tasks" projects you have no interest in crunching either because of low mag/hr or because they are not your preferred projects. This can be done locally on your BOINC client.
 
 If you do not have a minimum 1% sidestake setup to the Gridcoin foundation, this program will prompt you to set one up
 and refuse to run if you don't. We should all be pitching in to help promote and improve a coin we all benefit from.
