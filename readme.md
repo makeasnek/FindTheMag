@@ -1,5 +1,5 @@
 # FindTheMag
-FindTheMag helps optimize your BOINC client for gridcoin mining. You can group BOINC projects into two groups: 
+FindTheMag helps optimize your BOINC client for Gridcoin mining. You can group BOINC projects into two groups: 
 "preferred" projects and "mining" projects. Preferred projects are ones which you want to crunch regardless of how much 
 GRC they get you. Mining projects are projects which you are willing to crunch, but only if they get you the maximum 
 amount of GRC possible. In the event that your preferred project(s) happen to be the most efficient to mine, FindTheMag will 
@@ -12,7 +12,7 @@ projects to a weight of one so they will continue to use .1% of your processing 
 
 <b>This tool requires that you have the Gridcoin wallet running on your machine</b> and that it is fully synced. See FAQ for ways around this. The
 wallet doesn't need any coins in it, just an up-to-date copy of the blockchain. It also requires **python 3.8 or higher**,
-though earlier versions may work they are unsupported. If you just installed BOINC, this tool takes about 48 hours to start working as we have to wait for projects to grant you credit for your work.
+though earlier versions may work they are unsupported. If you just installed BOINC, this tool takes about 48 hours to start working as we have to wait for projects to grant you credit for your work. Though really a week's worth of data is about the minimum you'd need to get useful information from this tool.
 
 <b>If you use an account manager like BAM:</b>
 
@@ -22,6 +22,7 @@ though earlier versions may work they are unsupported. If you just installed BOI
 <b>If you manage your BOINC client locally:</b>
 
 - There is no way to set project weight outside of logging in to each project manually and setting it there.
+- You can still use this tool to find out the mag/hr of various projects and "no new tasks" projects you have no interest in crunching either because of low mag/hr or because they are not your preferred projects. This can be done locally on your BOINC client.
 
 <b>If you are a pool miner:</b>
 
@@ -34,13 +35,13 @@ and refuse to run if you don't. We should all be pitching in to help promote and
 some GRC to me at RzUgcntbFm8PeSJpauk6a44qbtu92dpw3K
 
 ## Quickstart instructions
-For all platforms: Open the first few lines of the main.py file in a text editor and change the settings you want.
+<b>For all platforms</b>: Open the first few lines of the main.py file in a text editor and change the settings you want.
 <h4>Windows</h4>
 
  - Download the latest version of python from python.org. Enable the "install to system path" option while installing.
  - In command prompt, run the command `python -m pip install --upgrade pip`
- - In command prompt, run the command `python install -r C:\Users\user\Downloads\FindTheMag-master\requirements.txt` (or wherever you saved this tool)
- - Double-click on main.py or run `python C:\path\to\main.py` from command prompt. We suggest the second method as it will display errors if the program exists unexpectedly
+ - In command prompt, run the command `python install -r "C:\Users\user\Downloads\FindTheMag-master\requirements.txt"` (or wherever you saved this tool)
+ - Double-click on main.py or run `python "C:\path\to\main.py"` from command prompt. We suggest the second method as it will display errors if the program exits unexpectedly
 
 <h4>Linux</h4>
 
@@ -50,7 +51,7 @@ For all platforms: Open the first few lines of the main.py file in a text editor
 
 <h4>OS X</h4>
 
- - Open a terminal and go to the folder you downloaded this tool into using `cd /home/user/Downloads/FindTheMag` or wherever you put it
+ - Open a terminal and go to the folder you downloaded this tool into using `cd "/home/user/Downloads/FindTheMag"` or wherever you put it
  - Run `pip3 install -r requirements.txt`
  - Run `python3 main.py`
 
