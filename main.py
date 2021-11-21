@@ -114,8 +114,12 @@ def get_config_parameters(gridcoin_dir:str)->Dict[str, str]:
     if 'gridcoinresearch.conf' in os.listdir(gridcoin_dir):
         with open(os.path.join(gridcoin_dir,'gridcoinresearch.conf')) as f:
             for line in f:
-                key=line.split('=')[0]
-                value=line.split('=')[1].replace('\n','')
+                try:
+                    key=line.split('=')[0]
+                    value=line.split('=')[1].replace('\n','')
+                except Exception as e:
+                    print('Warning: Error parsing line from config file, ignoring: '+line)
+                    continue
                 if key=='addnode':
                     continue
                 if key=='sidestake':
@@ -635,8 +639,10 @@ if __name__ == '__main__':
             with open(os.path.join(gridcoin_data_dir, 'gridcoinresearch.conf'), "a") as myfile:
                 from random import choice
                 from string import ascii_uppercase
+                from string import ascii_lowercase
+                from string import digits
                 rpc_user = ''.join(choice(ascii_uppercase) for i in range(8))
-                rpc_password = ''.join(choice(ascii_uppercase) for i in range(12))
+                rpc_password = ''.join(choice(ascii_uppercase+ascii_lowercase+digits) for i in range(12))
                 rpc_port = 9876
                 print('Your RPC username is: ' + rpc_user)
                 print('Your RPC password is: ' + rpc_password)
