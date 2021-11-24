@@ -126,7 +126,7 @@ def get_config_parameters(gridcoin_dir:str)->Dict[str, str]:
                     value=value.strip()
                 except Exception as e:
                     print('Warning: Error parsing line from config file, ignoring: '+line)
-                    print('Pase error was: '+str(e))
+                    print('Parse error was: '+str(e))
                     continue
                 if key=='addnode':
                     continue
