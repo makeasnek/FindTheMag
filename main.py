@@ -116,6 +116,8 @@ def get_config_parameters(gridcoin_dir:str)->Dict[str, str]:
             for line in f:
                 if line.startswith('#'):
                     continue
+                if line.strip()=="":
+                    continue
                 try:
                     key=line.split('=')[0]
                     value=line.split('=')[1].replace('\n','')
