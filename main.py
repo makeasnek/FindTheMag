@@ -1,7 +1,7 @@
 ##### EDIT THINGS BELOW THIS LINE TO YOUR CONTENT
 # percent of resources to dedicate to preferred projects
-preferred_projects_percent=80  # example: 80. This is ignores is preferred_projects has no projects in it
-# Your "preferred projects list". Work will be split among these projects according to given percent (10, 20, 80).
+preferred_projects_percent=80  # example: 80. This is ignored if preferred_projects has no projects in it
+# Your "preferred projects list". Work will be split among these projects according to a given percentage (10, 20, 80).
 # For example, if you want 80% of your "preferred project crunching time" to go to a particular project, put in 80. These values must add up to 100.
 # If you just want to crunch the most profitable projects all the time, uncomment the next line (and comment out the subsequent one) to have no preferred projects:
 # preferred_projects={}
