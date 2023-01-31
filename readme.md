@@ -1,4 +1,7 @@
 # FindTheMag
+Note: This version has been deprecated, please see [FTM 2.0](https://github.com/makeasnek/FindTheMag2/).
+
+
 FindTheMag helps optimize your BOINC client for Gridcoin mining. You can group BOINC projects into two groups: 
 "preferred" projects and "mining" projects. Preferred projects are ones which you want to crunch regardless of how much 
 GRC they get you. Mining projects are projects which you are willing to crunch, but only if they get you the maximum 
