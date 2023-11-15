@@ -1,5 +1,5 @@
 # FindTheMag
-Note: This version has been deprecated, please see [FTM 2.0](https://github.com/makeasnek/FindTheMag2/).
+## Note: This version has been deprecated, please see [FTM 2.0](https://github.com/makeasnek/FindTheMag2/).
 
 
 FindTheMag helps optimize your BOINC client for Gridcoin mining. You can group BOINC projects into two groups: 
